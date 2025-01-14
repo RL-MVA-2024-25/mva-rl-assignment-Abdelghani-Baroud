@@ -8,7 +8,7 @@ from gymnasium.wrappers import TimeLimit
 from env_hiv import HIVPatient
 from evaluate import evaluate_HIV
 from torch.utils.tensorboard import SummaryWriter
-import matplotlib.pyplot as plt
+
 
 # Initialize environment
 env = TimeLimit(env=HIVPatient(domain_randomization=True), max_episode_steps=200)
@@ -51,7 +51,7 @@ class ProjectAgent:
 
     def load(self):
         device = torch.device('cpu')
-        self.path = os.getcwd() + "/model_DQN.pt"
+        self.path = os.getcwd() + "/src/model_DQN.pt"
         self.model = self.myDQN({}, device)
         self.model.load_state_dict(torch.load(self.path, map_location=device))
         self.model.eval()
@@ -179,9 +179,4 @@ class ProjectAgent:
 if __name__ == "__main__":
     agent = ProjectAgent()
     returns = agent.train()
-    plt.plot(returns)
-    plt.xlabel('Episode')
-    plt.ylabel('Return')
-    plt.title('Training Performance')
-    plt.show()
     print("Training complete. Best model saved.")
